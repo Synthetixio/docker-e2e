@@ -15,7 +15,7 @@
     "prettier": "2.1.2"
   },
   "scripts": {
-    "generate": "node generate.js",
+    "generate": "node shared/generate-dockerfile.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "format": "prettier --write '**/*.js' '**/*.md'"
