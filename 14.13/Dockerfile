@@ -120,17 +120,12 @@ RUN chmod 755 $HOME
 # which means the current user is root
 RUN id
 
-# RUN Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99
-# ps -ef | grep Xvfb | grep -v grep | awk '{print $2}' | xargs kill -9
-
 # Cypress cache and installed version
 # should be in the root user's home folder
 RUN npx cypress verify
 RUN npx cypress cache path
 RUN npx cypress cache list
 RUN npx cypress info
-
-# RUN if pgrep Xvfb; then pkill Xvfb; fi
 
 # Node libraries
 RUN node -p process.versions
