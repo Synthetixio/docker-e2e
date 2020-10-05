@@ -108,7 +108,7 @@ RUN npm install && mv lib/* .
 WORKDIR $HOME
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 86.0.4240.22 --versions.gecko v0.27.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 86.0.4240.22 --versions.gecko v0.27.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -120,12 +120,14 @@ RUN chmod 755 $HOME
 # which means the current user is root
 RUN id
 
+RUN Xvfb :1 -screen 0 1920x1080x24 & export DISPLAY=:1
+
 # Cypress cache and installed version
 # should be in the root user's home folder
-RUN cypress verify
-RUN cypress cache path
-RUN cypress cache list
-RUN cypress info
+RUN npx cypress verify
+RUN npx cypress cache path
+RUN npx cypress cache list
+RUN npx cypress info
 
 # Node libraries
 RUN node -p process.versions
