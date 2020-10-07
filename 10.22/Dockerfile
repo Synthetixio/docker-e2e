@@ -1,4 +1,4 @@
-FROM cimg/node:10.22
+FROM ghcr.io/synthetixio/docker-node/base:10.22
 
 # hadolint ignore=DL3002
 USER root
