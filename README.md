@@ -2,7 +2,7 @@
 
 ## Description
 
-Docker container based on [cimg-node](https://github.com/CircleCI-Public/cimg-node) with pre-installed Chrome and Firefox with following e2e-related tools included:
+Docker container based on [docker-node](https://github.com/Synthetixio/docker-node) with pre-installed Chrome and Firefox with following e2e-related tools included:
 
 * [lighthouse with plugins](https://www.npmjs.com/package/lighthouse)
 * [@lhci/cli](https://www.npmjs.com/package/@lhci/cli)
