@@ -1,18 +1,4 @@
-FROM ghcr.io/synthetixio/docker-node/base:%%TAG%%
-
-# hadolint ignore=DL3002
-USER root
-
-ENV HOME /root
-
-# good colors for most applications
-ENV TERM xterm
-
-# avoid million NPM install messages
-ENV npm_config_loglevel warn
-
-# allow installing when the main user is root
-ENV npm_config_unsafe_perm true
+FROM ghcr.io/synthetixio/docker-node/focal:%%TAG%%
 
 # avoid too many progress messages
 # https://github.com/cypress-io/cypress/issues/1243
@@ -31,12 +17,6 @@ ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 # point Cypress at the /root/cache no matter what user account is used
 # see https://on.cypress.io/caching
 ENV CYPRESS_CACHE_FOLDER=${HOME}/.cache/Cypress
-
-# should be root user
-RUN npm config -g set user root
-
-# update to latest npm
-RUN npm install -g npm@%%NPM_VERSION%%
 
 # install dependencies
 RUN apt-get update && \
