@@ -1,4 +1,4 @@
-FROM ghcr.io/synthetixio/docker-node/focal:12.18
+FROM ghcr.io/synthetixio/docker-node/focal:12.19
 
 # avoid too many progress messages
 # https://github.com/cypress-io/cypress/issues/1243
