@@ -102,17 +102,3 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      # build steps has to be separate for each platform because of xvfb issues
-      - name: Build and push - i386
-        uses: docker/build-push-action@6925f94b6b8f23d547930f88b9886036ac92d510 # pin@v2
-        with:
-          context: .
-          file: ./${{ matrix.node }}/Dockerfile
-          platforms: linux/386
-          push: true
-          tags: |
-            ghcr.io/synthetixio/${{ github.event.repository.name }}/base:${{ matrix.node }}
-            synthetixio/${{ github.event.repository.name }}:${{ matrix.node }}
-
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
