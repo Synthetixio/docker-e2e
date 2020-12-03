@@ -12,5 +12,6 @@
 	"CHROMEDRIVER_VERSION": "87.0.4280.20",
 	"GECKODRIVER_VERSION": "0.28.0",
 	"SYNPRESS_VERSION": "latest",
-	"SSAT_VERSION": "latest"
+	"SSAT_VERSION": "latest",
+	"NEXT_VERSION": "latest"
 }
