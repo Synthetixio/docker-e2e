@@ -50,6 +50,8 @@ RUN apt-get update && \
   # Cypress dependencies
   zip \
   mplayer \
+  ffmpeg \
+  imagemagick \
   && rm -rf /var/lib/apt/lists/*
 
 # java
