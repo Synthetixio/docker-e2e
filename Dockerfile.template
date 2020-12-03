@@ -75,7 +75,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
   && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@%%LHCI_VERSION%% lighthouse-plugin-field-performance@%%LH_PLUGIN_FIELD_PERFORMANCE_VERSION%% lighthouse-plugin-social-sharing@%%LH_PLUGIN_SOCIAL_SHARING_VERSION%% lighthouse@%%LH_VERSION%% sitespeed.io@%%SITESPEEDIO_VERSION%% webdriver-manager@%%WEBDRIVER_MANAGER_VERSION%% @synthetixio/synpress@%%SYNPRESS_VERSION%% start-server-and-test@%%SSAT_VERSION%% next@%%NEXT_VERSION%%
+RUN npm install -g @lhci/cli@%%LHCI_VERSION%% lighthouse-plugin-field-performance@%%LH_PLUGIN_FIELD_PERFORMANCE_VERSION%% lighthouse-plugin-social-sharing@%%LH_PLUGIN_SOCIAL_SHARING_VERSION%% lighthouse@%%LH_VERSION%% sitespeed.io@%%SITESPEEDIO_VERSION%% webdriver-manager@%%WEBDRIVER_MANAGER_VERSION%%
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
