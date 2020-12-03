@@ -67,13 +67,14 @@ jobs:
           php-igbinary php-memcache php-memcached php-mongodb php-redis php-xdebug \
           php-zmq snmp pollinate libpq-dev postgresql-client powershell ruby-full \
           sphinxsearch subversion mongodb-org -yq >/dev/null 2>&1
-          sudo apt-get autoremove -y >/dev/null 2>&1
-          sudo apt-get autoclean -y >/dev/null 2>&1
-          sudo rm -rf /usr/local/lib/android >/dev/null 2>&1
-          docker system prune --volumes -f >/dev/null 2>&1
-          sudo swapoff -a >/dev/null 2>&1
-          sudo rm -f /swapfile >/dev/null 2>&1
-          df -h
+          
+        # sudo apt-get autoremove -y >/dev/null 2>&1
+        # sudo apt-get autoclean -y >/dev/null 2>&1
+        # sudo rm -rf /usr/local/lib/android >/dev/null 2>&1
+        # docker system prune --volumes -f >/dev/null 2>&1
+        # sudo swapoff -a >/dev/null 2>&1
+        # sudo rm -f /swapfile >/dev/null 2>&1
+        # df -h
 
       - name: Login to DockerHub
         uses: docker/login-action@adb73476b6e06caddec5db0bc1deacbec8cdd947 # pin@v1
