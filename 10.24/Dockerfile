@@ -5,11 +5,9 @@ FROM ghcr.io/synthetixio/docker-node/focal:10.24
 ENV QT_X11_NO_MITSHM=1
 ENV _X11_NO_MITSHM=1
 ENV _MITSHM=0
-
 # "fake" dbus address to prevent errors
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
-
 # point Cypress at the /root/cache no matter what user account is used
 # see https://on.cypress.io/caching
 ENV CYPRESS_CACHE_FOLDER=${HOME}/.cache/Cypress
@@ -73,7 +71,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
   && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.7.0 lighthouse-plugin-field-performance@2.2.1 lighthouse-plugin-social-sharing@0.0.1 lighthouse@7.2.0 sitespeed.io@16.9.2 webdriver-manager@12.1.8
+RUN npm install -g @lhci/cli@0.7.0 lighthouse@7.2.0 sitespeed.io@16.9.2 webdriver-manager@12.1.8
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
