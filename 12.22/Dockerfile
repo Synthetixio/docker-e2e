@@ -1,4 +1,4 @@
-FROM ghcr.io/synthetixio/docker-node/focal:12.21
+FROM ghcr.io/synthetixio/docker-node/focal:12.22
 
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270
@@ -59,13 +59,13 @@ RUN apt-get update && \
 
 # install Chrome browser
 # hadolint ignore=DL3015
-RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_89.0.4389.82-1_amd64.deb" && \
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_90.0.4430.212-1_amd64.deb" && \
   dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
   apt-get install -f -y && \
   rm -f /usr/src/google-chrome-stable_current_amd64.deb
 
 # install Firefox browser
-RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/86.0/linux-x86_64/en-US/firefox-86.0.tar.bz2 \
+RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/88.0.1/linux-x86_64/en-US/firefox-88.0.1.tar.bz2 \
   && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
   && rm /tmp/firefox.tar.bz2 \
   && ln -fs /opt/firefox/firefox /usr/bin/firefox
@@ -84,7 +84,7 @@ RUN npm install && mv lib/* .
 WORKDIR $HOME
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 89.0.4389.23 --versions.gecko v0.29.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 90.0.4430.24 --versions.gecko v0.29.1
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -112,9 +112,9 @@ RUN echo  "node version:  $(node -v) \n" \
   "yarn version:          $(yarn -v) \n" \
   "Selenium version:      3.141.59 \n" \
   "Chrome version:        $(google-chrome --version || true) \n" \
-  "Chromedriver version:  89.0.4389.23 \n" \
+  "Chromedriver version:  90.0.4430.24 \n" \
   "Firefox version:       $(firefox --version || true) \n" \
-  "Geckodriver version:   0.29.0 \n" \
+  "Geckodriver version:   0.29.1 \n" \
   "git version:           $(git --version) \n" \
   "user:                  $(whoami) \n" \
   "ubuntu version:        $(cat /etc/lsb-release)"
