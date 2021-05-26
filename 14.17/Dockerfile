@@ -1,4 +1,4 @@
-FROM ghcr.io/synthetixio/docker-node/focal:14.16-npm6
+FROM ghcr.io/synthetixio/docker-node/focal:14.17
 
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270
@@ -10,7 +10,7 @@ ENV _MITSHM=0
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 # point Cypress at the /root/cache no matter what user account is used
 # see https://on.cypress.io/caching
-ENV CYPRESS_CACHE_FOLDER=${HOME}/.cache/Cypress
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 
 # install dependencies
 RUN apt-get update && \
@@ -59,7 +59,7 @@ RUN apt-get update && \
 
 # install Chrome browser
 # hadolint ignore=DL3015
-RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_90.0.4430.212-1_amd64.deb" && \
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_91.0.4472.77-1_amd64.deb" && \
   dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
   apt-get install -f -y && \
   rm -f /usr/src/google-chrome-stable_current_amd64.deb
@@ -71,7 +71,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
   && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.7.0 lighthouse@7.2.0 sitespeed.io@16.9.2 webdriver-manager@12.1.8
+RUN npm install -g @lhci/cli@0.7.2 lighthouse@7.5.0 sitespeed.io@17.6.0 webdriver-manager@12.1.8
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
@@ -81,15 +81,15 @@ WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins/plugin-lighthouse
 RUN npm install
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins/plugin-gpsi
 RUN npm install && mv lib/* .
-WORKDIR $HOME
+WORKDIR /root
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 90.0.4430.24 --versions.gecko v0.29.1
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 91.0.4472.19 --versions.gecko v0.29.1
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
-RUN ls -la $HOME
-RUN chmod 755 $HOME
+RUN ls -la /root
+RUN chmod 755 /root
 
 # command "id" should print:
 # uid=0(root) gid=0(root) groups=0(root)
@@ -105,16 +105,3 @@ RUN npx cypress info
 
 # Node libraries
 RUN node -p process.versions
-
-# print versions of local tools
-RUN echo  "node version:  $(node -v) \n" \
-  "npm version:           $(npm -v) \n" \
-  "yarn version:          $(yarn -v) \n" \
-  "Selenium version:      3.141.59 \n" \
-  "Chrome version:        $(google-chrome --version || true) \n" \
-  "Chromedriver version:  90.0.4430.24 \n" \
-  "Firefox version:       $(firefox --version || true) \n" \
-  "Geckodriver version:   0.29.1 \n" \
-  "git version:           $(git --version) \n" \
-  "user:                  $(whoami) \n" \
-  "ubuntu version:        $(cat /etc/lsb-release)"
