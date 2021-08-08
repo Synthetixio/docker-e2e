@@ -32,21 +32,21 @@ RUN apt-get update && \
     libgtk-3-0 \
     libnotify-dev \
     libgconf-2-4 \
+    libgbm-dev \
     libnss3 \
     libxss1 \
     libasound2 \
     libxtst6 \
     xauth \
     xvfb \
-    language-pack-en \
     tzdata \
-    # selenium dependencies
-    bzip2 \
-    ca-certificates \
-    openjdk-11-jre-headless \
-    jq \
-    gnupg2 \
+{%- if distro === "ubuntu" %}
+    language-pack-en \
     # install Chinese fonts
+    ttf-ubuntu-font-family \
+{%- else %}
+    # install Chinese fonts
+{%- endif %}
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
     fonts-arphic-gbsn00lp \
@@ -63,7 +63,12 @@ RUN apt-get update && \
     fonts-ipafont-gothic \
     fonts-wqy-zenhei \
     fonts-tlwg-loma-otf \
-    ttf-ubuntu-font-family \
+    # selenium dependencies
+    bzip2 \
+    ca-certificates \
+    openjdk-11-jre-headless \
+    jq \
+    gnupg2 \
     # Chrome dependencies
     libgbm1 \
     fonts-liberation \
@@ -85,16 +90,6 @@ RUN echo "${TZ}" > /etc/timezone \
 # lang setup
 RUN locale-gen ${LANGUAGE} \
     && dpkg-reconfigure --frontend noninteractive locales
-
-# xvfb setup
-ENV SCREEN_WIDTH 1360
-ENV SCREEN_HEIGHT 1020
-ENV SCREEN_DEPTH 24
-ENV SCREEN_DPI 96
-ENV DISPLAY :99.0
-ENV DISPLAY_NUM 99
-ENV START_XVFB true
-RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 # install Chrome browser
 RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_{{ chromeVersion }}-1_amd64.deb" && \
