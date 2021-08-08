@@ -65,7 +65,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/synthetixio/${{ github.event.repository.name }}/${{ matrix.distro }}:${{ matrix.node }}
-            synthetixio/${{ github.event.repository.name }}:${{ matrix.distro }}-${{ matrix.node }}
+            synthetixio/${{ github.event.repository.name }}:${{ matrix.node }}-${{ matrix.distro }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
