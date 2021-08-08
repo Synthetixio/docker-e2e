@@ -12,10 +12,16 @@ ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 # point Cypress at the /root/cache no matter what user account is used
 # see https://on.cypress.io/caching
 ENV CYPRESS_CACHE_FOLDER=${HOME}/.cache/Cypress
+# lang setup
+ENV LANG_WHICH en
+ENV LANG_WHERE US
+ENV ENCODING UTF-8
+ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
+ENV LANG ${LANGUAGE}
 
 # install dependencies
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
+    apt-get install -y --no-install-recommends \
     software-properties-common \
     libgtk2.0-0 \
     libgtk-3-0 \
@@ -27,6 +33,14 @@ RUN apt-get update && \
     libxtst6 \
     xauth \
     xvfb \
+    language-pack-en \
+    tzdata \
+    # selenium dependencies
+    bzip2 \
+    ca-certificates \
+    openjdk-11-jre-headless \
+    jq \
+    gnupg2 \
     # install Chinese fonts
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
@@ -37,6 +51,14 @@ RUN apt-get update && \
     ttf-wqy-zenhei \
     ttf-wqy-microhei \
     xfonts-wqy \
+    libfontconfig \
+    libfreetype6 \
+    xfonts-cyrillic \
+    xfonts-scalable \
+    fonts-ipafont-gothic \
+    fonts-wqy-zenhei \
+    fonts-tlwg-loma-otf \
+    ttf-ubuntu-font-family \
     # Chrome dependencies
     libgbm1 \
     fonts-liberation \
@@ -47,16 +69,27 @@ RUN apt-get update && \
     mplayer \
     ffmpeg \
     imagemagick \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
+    && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' ./usr/lib/jvm/java-11-openjdk-amd64/conf/security/java.security
 
-# java
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - \
-    && add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
-    adoptopenjdk-8-hotspot \
-    && rm -rf /var/lib/apt/lists/*
+# setup timezone
+ENV TZ "UTC"
+RUN echo "${TZ}" > /etc/timezone \
+  && dpkg-reconfigure --frontend noninteractive tzdata
+
+# lang setup
+RUN locale-gen ${LANGUAGE} \
+    && dpkg-reconfigure --frontend noninteractive locales
+
+# xvfb setup
+ENV SCREEN_WIDTH 1360
+ENV SCREEN_HEIGHT 1020
+ENV SCREEN_DEPTH 24
+ENV SCREEN_DPI 96
+ENV DISPLAY :99.0
+ENV DISPLAY_NUM 99
+ENV START_XVFB true
+RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 # install Chrome browser
 RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_92.0.4515.131-1_amd64.deb" && \
