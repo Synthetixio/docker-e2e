@@ -24,6 +24,11 @@ ENV ENCODING UTF-8
 ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
 
+{%- if distro === "debian" %}
+# fix issues with java install on debian
+RUN mkdir -p /usr/share/man/man1
+{%- endif %}
+
 # install dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \

@@ -18,6 +18,8 @@ ENV LANG_WHERE US
 ENV ENCODING UTF-8
 ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
+# fix issues with java install on debian
+RUN mkdir -p /usr/share/man/man1
 
 # install dependencies
 RUN apt-get update && \
