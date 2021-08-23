@@ -1,5 +1,5 @@
 
-FROM ghcr.io/synthetixio/docker-node/ubuntu:16.6
+FROM ghcr.io/synthetixio/docker-node/ubuntu:16.7
 
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270
@@ -83,13 +83,13 @@ RUN locale-gen ${LANGUAGE} \
     && dpkg-reconfigure --frontend noninteractive locales
 
 # install Chrome browser
-RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_92.0.4515.131-1_amd64.deb" && \
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_92.0.4515.159-1_amd64.deb" && \
     dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
     apt-get install -f -y && \
     rm -f /usr/src/google-chrome-stable_current_amd64.deb
 
 # install Firefox browser
-RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/90.0.2/linux-x86_64/en-US/firefox-90.0.2.tar.bz2 \
+RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/91.0.1/linux-x86_64/en-US/firefox-91.0.1.tar.bz2 \
     && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
     && rm /tmp/firefox.tar.bz2 \
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
