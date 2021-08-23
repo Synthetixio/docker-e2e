@@ -63,7 +63,6 @@ RUN apt-get update && \
     # Chrome dependencies
     libgbm1 \
     fonts-liberation \
-    libappindicator3-1 \
     xdg-utils \
     # Cypress dependencies
     zip \
