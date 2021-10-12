@@ -1,15 +1,15 @@
 {
   "distro": ["ubuntu", "debian"],
-  "nodeVersion": ["12.22", "14.17", "16.7"],
+  "nodeVersion": ["12.22", "14.18", "16.11"],
   "ubuntuVersion": "focal",
   "debianVersion": "stable-slim",
-  "chromeVersion": "92.0.4515.159",
-  "firefoxVersion": "91.0.1",
-  "lhciVersion": "0.8.0",
-  "lhVersion": "8.2.0",
-  "sitespeedioVersion": "18.0.1",
+  "chromeVersion": "94.0.4606.81",
+  "firefoxVersion": "93.0",
+  "lhciVersion": "0.8.2",
+  "lhVersion": "8.5.1",
+  "sitespeedioVersion": "20.1.0",
   "webdriverManagerVersion": "12.1.8",
   "seleniumStandaloneVersion": "3.141.59",
-  "chromedriverVersion": "92.0.4515.107",
-  "geckodriverVersion": "0.29.1"
+  "chromedriverVersion": "94.0.4606.61",
+  "geckodriverVersion": "0.30.0"
 }
