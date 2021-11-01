@@ -1,5 +1,5 @@
 
-FROM ghcr.io/synthetixio/docker-node/ubuntu:12.22
+FROM ghcr.io/synthetixio/docker-node/ubuntu:16.13
 
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270

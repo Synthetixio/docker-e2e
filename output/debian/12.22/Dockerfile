@@ -82,7 +82,7 @@ RUN locale-gen ${LANGUAGE} \
     && dpkg-reconfigure --frontend noninteractive locales
 
 # install Chrome browser
-RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_94.0.4606.81-1_amd64.deb" && \
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_95.0.4638.69-1_amd64.deb" && \
     dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
     apt-get install -f -y && \
     rm -f /usr/src/google-chrome-stable_current_amd64.deb
@@ -94,7 +94,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.8.2 lighthouse@8.5.1 sitespeed.io@20.1.0 webdriver-manager@12.1.8
+RUN npm install -g @lhci/cli@0.8.2 lighthouse@8.6.0 sitespeed.io@20.4.1 webdriver-manager@12.1.8
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
@@ -107,7 +107,7 @@ RUN npm install && mv lib/* .
 WORKDIR $HOME
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 94.0.4606.61 --versions.gecko v0.30.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 4.0.0 --versions.chrome 95.0.4638.54 --versions.gecko v0.30.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -133,9 +133,9 @@ RUN node -p process.versions
 RUN echo  "node version:  $(node -v) \n" \
   "npm version:           $(npm -v) \n" \
   "yarn version:          $(yarn -v) \n" \
-  "Selenium version:      3.141.59 \n" \
+  "Selenium version:      4.0.0 \n" \
   "Chrome version:        $(google-chrome --version || true) \n" \
-  "Chromedriver version:  94.0.4606.61 \n" \
+  "Chromedriver version:  95.0.4638.54 \n" \
   "Firefox version:       $(firefox --version || true) \n" \
   "Geckodriver version:   0.30.0 \n" \
   "git version:           $(git --version) \n" \
