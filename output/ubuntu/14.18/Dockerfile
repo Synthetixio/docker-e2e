@@ -107,7 +107,7 @@ RUN npm install && mv lib/* .
 WORKDIR $HOME
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 4.0.0 --versions.chrome 95.0.4638.54 --versions.gecko v0.30.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 95.0.4638.54 --versions.gecko v0.30.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -133,7 +133,7 @@ RUN node -p process.versions
 RUN echo  "node version:  $(node -v) \n" \
   "npm version:           $(npm -v) \n" \
   "yarn version:          $(yarn -v) \n" \
-  "Selenium version:      4.0.0 \n" \
+  "Selenium version:      3.141.59 \n" \
   "Chrome version:        $(google-chrome --version || true) \n" \
   "Chromedriver version:  95.0.4638.54 \n" \
   "Firefox version:       $(firefox --version || true) \n" \

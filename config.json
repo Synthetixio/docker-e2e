@@ -9,7 +9,7 @@
   "lhVersion": "8.6.0",
   "sitespeedioVersion": "20.4.1",
   "webdriverManagerVersion": "12.1.8",
-  "seleniumStandaloneVersion": "4.0.0",
+  "seleniumStandaloneVersion": "3.141.59",
   "chromedriverVersion": "95.0.4638.54",
   "geckodriverVersion": "0.30.0"
 }
