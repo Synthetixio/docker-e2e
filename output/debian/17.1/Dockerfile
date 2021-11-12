@@ -1,5 +1,5 @@
 
-FROM ghcr.io/synthetixio/docker-node/ubuntu:17.0
+FROM ghcr.io/synthetixio/docker-node/debian:17.1
 
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270
@@ -18,6 +18,8 @@ ENV LANG_WHERE US
 ENV ENCODING UTF-8
 ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
+# fix issues with java install on debian
+RUN mkdir -p /usr/share/man/man1
 
 # install dependencies
 RUN apt-get update && \
@@ -35,9 +37,7 @@ RUN apt-get update && \
     xauth \
     xvfb \
     tzdata \
-    language-pack-en \
     # install Chinese fonts
-    ttf-ubuntu-font-family \
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
     fonts-arphic-gbsn00lp \
@@ -88,13 +88,13 @@ RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.co
     rm -f /usr/src/google-chrome-stable_current_amd64.deb
 
 # install Firefox browser
-RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/93.0/linux-x86_64/en-US/firefox-93.0.tar.bz2 \
+RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/94.0.1/linux-x86_64/en-US/firefox-94.0.1.tar.bz2 \
     && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
     && rm /tmp/firefox.tar.bz2 \
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.8.2 lighthouse@8.6.0 sitespeed.io@20.4.1 webdriver-manager@12.1.8
+RUN npm install -g @lhci/cli@0.8.2 lighthouse@8.6.0 sitespeed.io@20.5.0 webdriver-manager@12.1.8
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
