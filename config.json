@@ -1,6 +1,6 @@
 {
   "distro": ["ubuntu", "debian"],
-  "nodeVersion": ["12.22", "14.18", "16.13", "17.2"],
+  "nodeVersion": ["12.22", "14.18", "16.13", "17.3"],
   "ubuntuVersion": "focal",
   "debianVersion": "stable-slim",
   "chromeVersion": "96.0.4664",

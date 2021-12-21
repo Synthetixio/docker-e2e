@@ -1,5 +1,5 @@
 
-FROM ghcr.io/synthetixio/docker-node/debian:17.2
+FROM ghcr.io/synthetixio/docker-node/ubuntu:17.3
 
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270
@@ -18,8 +18,6 @@ ENV LANG_WHERE US
 ENV ENCODING UTF-8
 ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
-# fix issues with java install on debian
-RUN mkdir -p /usr/share/man/man1
 
 # install dependencies
 RUN apt-get update && \
@@ -37,7 +35,9 @@ RUN apt-get update && \
     xauth \
     xvfb \
     tzdata \
+    language-pack-en \
     # install Chinese fonts
+    ttf-ubuntu-font-family \
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
     fonts-arphic-gbsn00lp \
