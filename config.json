@@ -3,13 +3,13 @@
   "nodeVersion": ["12.22", "14.18", "16.13", "17.3"],
   "ubuntuVersion": "focal",
   "debianVersion": "stable-slim",
-  "chromeVersion": "96.0.4664",
-  "firefoxVersion": "94.0.2",
+  "chromeVersion": "97.0.4692.71",
+  "firefoxVersion": "95.0.2",
   "lhciVersion": "0.8.2",
-  "lhVersion": "8.6.0",
-  "sitespeedioVersion": "20.5.0",
+  "lhVersion": "9.2.0",
+  "sitespeedioVersion": "21.3.0",
   "webdriverManagerVersion": "12.1.8",
   "seleniumStandaloneVersion": "3.141.59",
-  "chromedriverVersion": "96.0.4664.45",
+  "chromedriverVersion": "97.0.4692.71",
   "geckodriverVersion": "0.30.0"
 }
