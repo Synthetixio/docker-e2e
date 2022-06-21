@@ -1,5 +1,5 @@
 
-FROM ghcr.io/synthetixio/docker-node/debian:12.22
+FROM ghcr.io/synthetixio/docker-node/ubuntu:18.4
 
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270
@@ -18,8 +18,6 @@ ENV LANG_WHERE US
 ENV ENCODING UTF-8
 ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
-# fix issues with java install on debian
-RUN mkdir -p /usr/share/man/man1
 
 # install dependencies
 RUN apt-get update && \
@@ -37,7 +35,9 @@ RUN apt-get update && \
     xauth \
     xvfb \
     tzdata \
+    language-pack-en \
     # install Chinese fonts
+    ttf-ubuntu-font-family \
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
     fonts-arphic-gbsn00lp \
@@ -82,19 +82,19 @@ RUN locale-gen ${LANGUAGE} \
     && dpkg-reconfigure --frontend noninteractive locales
 
 # install Chrome browser
-RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_100.0.4896.60-1_amd64.deb" && \
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_102.0.5005.115-1_amd64.deb" && \
     dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
     apt-get install -f -y && \
     rm -f /usr/src/google-chrome-stable_current_amd64.deb
 
 # install Firefox browser
-RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/98.0.2/linux-x86_64/en-US/firefox-98.0.2.tar.bz2 \
+RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/101.0.1/linux-x86_64/en-US/firefox-101.0.1.tar.bz2 \
     && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
     && rm /tmp/firefox.tar.bz2 \
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.5.0 sitespeed.io@23.7.0 webdriver-manager@12.1.8
+RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.5.0 sitespeed.io@25.1.1 webdriver-manager@12.1.8
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
@@ -107,7 +107,7 @@ RUN npm install && mv lib/* .
 WORKDIR $HOME
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 100.0.4896.60 --versions.gecko v0.30.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 102.0.5005.61 --versions.gecko v0.31.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -135,9 +135,9 @@ RUN echo  "node version:  $(node -v) \n" \
   "yarn version:          $(yarn -v) \n" \
   "Selenium version:      3.141.59 \n" \
   "Chrome version:        $(google-chrome --version || true) \n" \
-  "Chromedriver version:  100.0.4896.60 \n" \
+  "Chromedriver version:  102.0.5005.61 \n" \
   "Firefox version:       $(firefox --version || true) \n" \
-  "Geckodriver version:   0.30.0 \n" \
+  "Geckodriver version:   0.31.0 \n" \
   "git version:           $(git --version) \n" \
   "user:                  $(whoami) \n" \
   "ubuntu version:        $(cat /etc/lsb-release)"
