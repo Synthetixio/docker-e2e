@@ -123,6 +123,9 @@ RUN locale-gen ${LANGUAGE} \
 # noVNC setup
 ENV NOVNC_SHA="463c39e4af98ec4106b87bbea17e1605aa4c6180"
 ENV WEBSOCKIFY_SHA="71d55fcaa8fff045048b08d3502a19cfeefec19e"
+
+RUN mkdir -p /opt/bin/noVNC/utils/websockify
+
 RUN  wget -nv -O noVNC.zip \
     "https://github.com/novnc/noVNC/archive/${NOVNC_SHA}.zip" \
     && unzip -x noVNC.zip \
