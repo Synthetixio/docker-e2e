@@ -11,5 +11,7 @@
   "webdriverManagerVersion": "12.1.8",
   "seleniumStandaloneVersion": "3.141.59",
   "chromedriverVersion": "105.0.5195.52",
-  "geckodriverVersion": "0.31.0"
+  "geckodriverVersion": "0.31.0",
+  "typescriptVersion": "4.8.3",
+  "cypressVersion": "10.7.0"
 }
