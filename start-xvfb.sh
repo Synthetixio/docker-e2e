@@ -17,7 +17,7 @@ if [ "${START_XVFB:-$SE_START_XVFB}" = true ] ; then
   /usr/bin/xvfb-run --server-num=${DISPLAY_NUM} \
     --listen-tcp \
     --server-args="-screen 0 ${GEOMETRY} -fbdir /var/tmp -dpi ${SCREEN_DPI} -listen tcp -noreset -ac +extension RANDR" \
-    /usr/bin/fluxbox -display ${DISPLAY}
+    /usr/bin/fluxbox -display :99.0
 else
   echo "Xvfb and Fluxbox won't start."
 fi

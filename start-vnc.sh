@@ -29,14 +29,14 @@ if [ "${START_XVFB:-$SE_START_XVFB}" = true ] ; then
   for i in $(seq 1 10)
   do
     sleep 1
-    xdpyinfo -display ${DISPLAY} >/dev/null 2>&1
+    xdpyinfo -display :99.0 >/dev/null 2>&1
     if [ $? -eq 0 ]; then
       break
     fi
     echo "Waiting for Xvfb..."
   done
 
-  x11vnc ${X11VNC_OPTS} -forever -shared -rfbport ${VNC_PORT:-$SE_VNC_PORT} -rfbportv6 ${VNC_PORT:-$SE_VNC_PORT} -display ${DISPLAY}
+  x11vnc ${X11VNC_OPTS} -forever -shared -rfbport ${VNC_PORT:-$SE_VNC_PORT} -rfbportv6 ${VNC_PORT:-$SE_VNC_PORT} -display :99.0
 else
   echo "Vnc won't start because Xvfb is configured to not start."
 fi

@@ -106,35 +106,33 @@ RUN echo "${TZ}" > /etc/timezone \
 RUN locale-gen ${LANGUAGE} \
     && dpkg-reconfigure --frontend noninteractive locales
 
+COPY display.conf /etc/supervisor/conf.d/
+
 # noVNC setup
 ENV NOVNC_SHA="84f102d6a9ffaf3972693d59bad5c6fddb6d7fb0"
 ENV WEBSOCKIFY_SHA="c5d365dd1dbfee89881f1c1c02a2ac64838d645f"
-
-RUN mkdir -p /opt/bin/noVNC/utils/websockify
-
-RUN  wget -nv -O noVNC.zip \
-    "https://github.com/novnc/noVNC/archive/${NOVNC_SHA}.zip" \
-    && unzip -x noVNC.zip \
-    && mv noVNC-${NOVNC_SHA} /opt/bin/noVNC \
-    && cp /opt/bin/noVNC/vnc.html /opt/bin/noVNC/index.html \
-    && rm noVNC.zip \
-    && wget -nv -O websockify.zip \
-    "https://github.com/novnc/websockify/archive/${WEBSOCKIFY_SHA}.zip" \
-    && unzip -x websockify.zip \
-    && rm websockify.zip \
-    && rm -rf websockify-${WEBSOCKIFY_SHA}/tests \
-    && mv websockify-${WEBSOCKIFY_SHA} /opt/bin/noVNC/utils/websockify
+RUN wget -nv -O noVNC.zip "https://github.com/novnc/noVNC/archive/${NOVNC_SHA}.zip"
+RUN unzip -x noVNC.zip
+RUN mv noVNC-${NOVNC_SHA} noVNC
+RUN cp /noVNC/vnc.html /noVNC/index.html
+RUN rm noVNC.zip
+RUN wget -nv -O websockify.zip \
+    "https://github.com/novnc/websockify/archive/${WEBSOCKIFY_SHA}.zip"
+RUN unzip -x websockify.zip
+RUN rm websockify.zip
+RUN rm -rf websockify-${WEBSOCKIFY_SHA}/tests
+RUN mv websockify-${WEBSOCKIFY_SHA} noVNC/utils/websockify
 
 RUN chmod +x /dev/shm
 
-COPY start-xvfb.sh /opt/bin/
+COPY start-xvfb.sh /usr/bin/
 
 RUN mkdir -p /root/.vnc \
     && x11vnc -storepasswd secret /root/.vnc/passwd
 
 COPY start-vnc.sh \
     start-novnc.sh \
-    /opt/bin/
+    /usr/bin/
 
 ENV SE_SCREEN_WIDTH 1360
 ENV SE_SCREEN_HEIGHT 1020
@@ -145,11 +143,10 @@ ENV START_XVFB true
 ENV SE_START_NO_VNC true
 ENV SE_NO_VNC_PORT 7900
 ENV SE_VNC_PORT 5900
-ENV DISPLAY :99.0
 ENV DISPLAY_NUM 99
 
 # Creating base directory for Xvfb
-RUN  sudo mkdir -p /tmp/.X11-unix && sudo chmod 1777 /tmp/.X11-unix
+RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 # install Chrome browser
 RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_105.0.5195.52-1_amd64.deb" && \
@@ -164,7 +161,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.6.7 sitespeed.io@25.11.0 webdriver-manager@12.1.8 typescript4.8.3 cypress@10.7.0
+RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.6.7 sitespeed.io@25.11.0 webdriver-manager@12.1.8 typescript@4.8.3 cypress@10.7.0
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
@@ -211,3 +208,5 @@ RUN echo  "node version:  $(node -v) \n" \
   "git version:           $(git --version) \n" \
   "user:                  $(whoami) \n" \
   "ubuntu version:        $(cat /etc/lsb-release)"
+
+CMD ["/usr/bin/supervisord"]
