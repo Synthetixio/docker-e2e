@@ -13,6 +13,8 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
+    "typescriptVersion": "4.8.3",
+    "cypressVersion": "10.7.0",
     "file": "../output/ubuntu/14.20/Dockerfile"
   },
   {
@@ -29,6 +31,8 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
+    "typescriptVersion": "4.8.3",
+    "cypressVersion": "10.7.0",
     "file": "../output/ubuntu/16.17/Dockerfile"
   },
   {
@@ -45,6 +49,8 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
+    "typescriptVersion": "4.8.3",
+    "cypressVersion": "10.7.0",
     "file": "../output/ubuntu/18.8/Dockerfile"
   },
   {
@@ -61,6 +67,8 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
+    "typescriptVersion": "4.8.3",
+    "cypressVersion": "10.7.0",
     "file": "../output/debian/14.20/Dockerfile"
   },
   {
@@ -77,6 +85,8 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
+    "typescriptVersion": "4.8.3",
+    "cypressVersion": "10.7.0",
     "file": "../output/debian/16.17/Dockerfile"
   },
   {
@@ -93,6 +103,8 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
+    "typescriptVersion": "4.8.3",
+    "cypressVersion": "10.7.0",
     "file": "../output/debian/18.8/Dockerfile"
   }
 ]

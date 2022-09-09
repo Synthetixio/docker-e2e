@@ -1,6 +1,8 @@
 
 FROM ghcr.io/synthetixio/docker-node/ubuntu:18.8
 
+USER root
+
 # disable shared memory X11 affecting Cypress v4 and Chrome
 # https://github.com/cypress-io/cypress-docker-images/issues/270
 ENV QT_X11_NO_MITSHM=1
@@ -11,13 +13,17 @@ ENV _MITSHM=0
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 # point Cypress at the /root/cache no matter what user account is used
 # see https://on.cypress.io/caching
-ENV CYPRESS_CACHE_FOLDER=${HOME}/.cache/Cypress
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+# Allow projects to reference globally installed cypress
+ENV NODE_PATH=/usr/local/lib/node_modules
 # lang setup
 ENV LANG_WHICH en
 ENV LANG_WHERE US
 ENV ENCODING UTF-8
 ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
+
+ENV CI=1
 
 # install dependencies
 RUN apt-get update && \
@@ -32,8 +38,17 @@ RUN apt-get update && \
     libxss1 \
     libasound2 \
     libxtst6 \
+    procps \
     xauth \
     xvfb \
+    vim-tiny \
+    nano \
+    socat \
+    supervisor \
+    x11-xserver-utils \
+    pulseaudio \
+    x11vnc \
+    fluxbox \
     tzdata \
     language-pack-en \
     # install Chinese fonts
@@ -54,12 +69,16 @@ RUN apt-get update && \
     fonts-ipafont-gothic \
     fonts-wqy-zenhei \
     fonts-tlwg-loma-otf \
+    fonts-noto-color-emoji \
     # selenium dependencies
     bzip2 \
     ca-certificates \
     openjdk-11-jre-headless \
     jq \
     gnupg2 \
+    libcurl4 \
+    libcurl3-gnutls \
+    libcurl3-nss \
     # Chrome dependencies
     libgbm1 \
     fonts-liberation \
@@ -81,6 +100,48 @@ RUN echo "${TZ}" > /etc/timezone \
 RUN locale-gen ${LANGUAGE} \
     && dpkg-reconfigure --frontend noninteractive locales
 
+# noVNC setup
+ENV NOVNC_SHA="463c39e4af98ec4106b87bbea17e1605aa4c6180"
+ENV WEBSOCKIFY_SHA="71d55fcaa8fff045048b08d3502a19cfeefec19e"
+RUN  wget -nv -O noVNC.zip \
+    "https://github.com/novnc/noVNC/archive/${NOVNC_SHA}.zip" \
+    && unzip -x noVNC.zip \
+    && mv noVNC-${NOVNC_SHA} /opt/bin/noVNC \
+    && cp /opt/bin/noVNC/vnc.html /opt/bin/noVNC/index.html \
+    && rm noVNC.zip \
+    && wget -nv -O websockify.zip \
+    "https://github.com/novnc/websockify/archive/${WEBSOCKIFY_SHA}.zip" \
+    && unzip -x websockify.zip \
+    && rm websockify.zip \
+    && rm -rf websockify-${WEBSOCKIFY_SHA}/tests \
+    && mv websockify-${WEBSOCKIFY_SHA} /opt/bin/noVNC/utils/websockify
+
+RUN chmod +x /dev/shm
+
+COPY start-xvfb.sh /opt/bin/
+
+RUN mkdir -p /root/.vnc \
+    && x11vnc -storepasswd secret /root/.vnc/passwd
+
+COPY start-vnc.sh \
+    start-novnc.sh \
+    /opt/bin/
+
+ENV SE_SCREEN_WIDTH 1360
+ENV SE_SCREEN_HEIGHT 1020
+ENV SE_SCREEN_DEPTH 24
+ENV SE_SCREEN_DPI 96
+ENV SE_START_XVFB true
+ENV START_XVFB true
+ENV SE_START_NO_VNC true
+ENV SE_NO_VNC_PORT 7900
+ENV SE_VNC_PORT 5900
+ENV DISPLAY :99.0
+ENV DISPLAY_NUM 99
+
+# Creating base directory for Xvfb
+RUN  sudo mkdir -p /tmp/.X11-unix && sudo chmod 1777 /tmp/.X11-unix
+
 # install Chrome browser
 RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_105.0.5195.52-1_amd64.deb" && \
     dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
@@ -94,7 +155,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.6.7 sitespeed.io@25.11.0 webdriver-manager@12.1.8
+RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.6.7 sitespeed.io@25.11.0 webdriver-manager@12.1.8 typescript4.8.3 cypress@10.7.0
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
@@ -104,15 +165,15 @@ WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins/plugin-lighthouse
 RUN npm install
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins/plugin-gpsi
 RUN npm install && mv lib/* .
-WORKDIR $HOME
+WORKDIR /root
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
 RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 105.0.5195.52 --versions.gecko v0.31.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
-RUN ls -la $HOME
-RUN chmod 755 $HOME
+RUN ls -la /root
+RUN chmod 755 /root
 
 # command "id" should print:
 # uid=0(root) gid=0(root) groups=0(root)
