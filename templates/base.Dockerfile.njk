@@ -20,7 +20,7 @@ ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 # see https://on.cypress.io/caching
 ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 # Allow projects to reference globally installed cypress
-NODE_PATH=/usr/local/lib/node_modules
+ENV NODE_PATH=/usr/local/lib/node_modules
 # lang setup
 ENV LANG_WHICH en
 ENV LANG_WHERE US
