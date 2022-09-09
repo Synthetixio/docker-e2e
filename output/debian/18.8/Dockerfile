@@ -161,7 +161,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.6.7 sitespeed.io@25.11.0 webdriver-manager@12.1.8 typescript@4.8.3 cypress@10.7.0
+RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.6.7 sitespeed.io@25.11.0 webdriver-manager@12.1.8
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
@@ -186,13 +186,6 @@ RUN chmod 755 /root
 # which means the current user is root
 RUN id
 
-# Cypress cache and installed version
-# should be in the root user's home folder
-RUN npx cypress verify
-RUN npx cypress cache path
-RUN npx cypress cache list
-RUN npx cypress info
-
 # Node libraries
 RUN node -p process.versions
 
@@ -208,5 +201,8 @@ RUN echo  "node version:  $(node -v) \n" \
   "git version:           $(git --version) \n" \
   "user:                  $(whoami) \n" \
   "ubuntu version:        $(cat /etc/lsb-release)"
+
+EXPOSE 7900
+EXPOSE 5900
 
 CMD ["/usr/bin/supervisord"]
