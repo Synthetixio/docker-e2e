@@ -101,8 +101,8 @@ RUN locale-gen ${LANGUAGE} \
     && dpkg-reconfigure --frontend noninteractive locales
 
 # noVNC setup
-ENV NOVNC_SHA="463c39e4af98ec4106b87bbea17e1605aa4c6180"
-ENV WEBSOCKIFY_SHA="71d55fcaa8fff045048b08d3502a19cfeefec19e"
+ENV NOVNC_SHA="84f102d6a9ffaf3972693d59bad5c6fddb6d7fb0"
+ENV WEBSOCKIFY_SHA="c5d365dd1dbfee89881f1c1c02a2ac64838d645f"
 
 RUN mkdir -p /opt/bin/noVNC/utils/websockify
 
