@@ -4,8 +4,8 @@
     "nodeVersion": "14.20",
     "ubuntuVersion": "focal",
     "debianVersion": "stable-slim",
-    "chromeVersion": "105.0.5195.52",
-    "firefoxVersion": "104.0.2",
+    "chromeVersion": "96.0.4664.110",
+    "firefoxVersion": "105.0.2",
     "lhciVersion": "0.9.0",
     "lhVersion": "9.6.7",
     "sitespeedioVersion": "25.11.0",
@@ -13,8 +13,6 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
-    "typescriptVersion": "4.8.3",
-    "cypressVersion": "10.7.0",
     "file": "../output/ubuntu/14.20/Dockerfile"
   },
   {
@@ -22,8 +20,8 @@
     "nodeVersion": "16.17",
     "ubuntuVersion": "focal",
     "debianVersion": "stable-slim",
-    "chromeVersion": "105.0.5195.52",
-    "firefoxVersion": "104.0.2",
+    "chromeVersion": "96.0.4664.110",
+    "firefoxVersion": "105.0.2",
     "lhciVersion": "0.9.0",
     "lhVersion": "9.6.7",
     "sitespeedioVersion": "25.11.0",
@@ -31,8 +29,6 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
-    "typescriptVersion": "4.8.3",
-    "cypressVersion": "10.7.0",
     "file": "../output/ubuntu/16.17/Dockerfile"
   },
   {
@@ -40,8 +36,8 @@
     "nodeVersion": "18.8",
     "ubuntuVersion": "focal",
     "debianVersion": "stable-slim",
-    "chromeVersion": "105.0.5195.52",
-    "firefoxVersion": "104.0.2",
+    "chromeVersion": "96.0.4664.110",
+    "firefoxVersion": "105.0.2",
     "lhciVersion": "0.9.0",
     "lhVersion": "9.6.7",
     "sitespeedioVersion": "25.11.0",
@@ -49,8 +45,6 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
-    "typescriptVersion": "4.8.3",
-    "cypressVersion": "10.7.0",
     "file": "../output/ubuntu/18.8/Dockerfile"
   },
   {
@@ -58,8 +52,8 @@
     "nodeVersion": "14.20",
     "ubuntuVersion": "focal",
     "debianVersion": "stable-slim",
-    "chromeVersion": "105.0.5195.52",
-    "firefoxVersion": "104.0.2",
+    "chromeVersion": "96.0.4664.110",
+    "firefoxVersion": "105.0.2",
     "lhciVersion": "0.9.0",
     "lhVersion": "9.6.7",
     "sitespeedioVersion": "25.11.0",
@@ -67,8 +61,6 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
-    "typescriptVersion": "4.8.3",
-    "cypressVersion": "10.7.0",
     "file": "../output/debian/14.20/Dockerfile"
   },
   {
@@ -76,8 +68,8 @@
     "nodeVersion": "16.17",
     "ubuntuVersion": "focal",
     "debianVersion": "stable-slim",
-    "chromeVersion": "105.0.5195.52",
-    "firefoxVersion": "104.0.2",
+    "chromeVersion": "96.0.4664.110",
+    "firefoxVersion": "105.0.2",
     "lhciVersion": "0.9.0",
     "lhVersion": "9.6.7",
     "sitespeedioVersion": "25.11.0",
@@ -85,8 +77,6 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
-    "typescriptVersion": "4.8.3",
-    "cypressVersion": "10.7.0",
     "file": "../output/debian/16.17/Dockerfile"
   },
   {
@@ -94,8 +84,8 @@
     "nodeVersion": "18.8",
     "ubuntuVersion": "focal",
     "debianVersion": "stable-slim",
-    "chromeVersion": "105.0.5195.52",
-    "firefoxVersion": "104.0.2",
+    "chromeVersion": "96.0.4664.110",
+    "firefoxVersion": "105.0.2",
     "lhciVersion": "0.9.0",
     "lhVersion": "9.6.7",
     "sitespeedioVersion": "25.11.0",
@@ -103,8 +93,6 @@
     "seleniumStandaloneVersion": "3.141.59",
     "chromedriverVersion": "105.0.5195.52",
     "geckodriverVersion": "0.31.0",
-    "typescriptVersion": "4.8.3",
-    "cypressVersion": "10.7.0",
     "file": "../output/debian/18.8/Dockerfile"
   }
 ]
