@@ -49,12 +49,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # pin@v1
-        with:
-          registry: ghcr.io
-          username: synthetixio
-          password: ${{ secrets.GH_PACKAGES_READ_WRITE }}
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # pin@v1
+      #   with:
+      #     registry: ghcr.io
+      #     username: synthetixio
+      #     password: ${{ secrets.GH_PACKAGES_READ_WRITE }}
 
       - name: Build and push (${{ matrix.distro }}[${{ matrix.node }}])
         uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94 # pin@v2
@@ -64,7 +64,6 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/synthetixio/${{ github.event.repository.name }}/${{ matrix.distro }}:${{ matrix.node }}
             synthetixio/${{ github.event.repository.name }}:${{ matrix.node }}-${{ matrix.distro }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
