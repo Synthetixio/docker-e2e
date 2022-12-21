@@ -52,7 +52,6 @@ RUN apt-get update && \
     tzdata \
     language-pack-en \
     # install Chinese fonts
-    ttf-ubuntu-font-family \
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
     fonts-arphic-gbsn00lp \

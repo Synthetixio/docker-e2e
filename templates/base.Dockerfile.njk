@@ -68,11 +68,8 @@ RUN apt-get update && \
     tzdata \
 {%- if distro === "ubuntu" %}
     language-pack-en \
-    # install Chinese fonts
-    ttf-ubuntu-font-family \
-{%- else %}
-    # install Chinese fonts
 {%- endif %}
+    # install Chinese fonts
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
     fonts-arphic-gbsn00lp \
