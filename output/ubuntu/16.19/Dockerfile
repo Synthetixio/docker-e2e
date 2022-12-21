@@ -155,7 +155,7 @@ RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.moz
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
 
 # install needed global npm modules
-RUN npm install -g @lhci/cli@0.9.0 lighthouse@9.6.7 sitespeed.io@25.11.0 webdriver-manager@12.1.8
+RUN npm install -g @lhci/cli@0.10.0 lighthouse@9.6.8 sitespeed.io@26.1.0 webdriver-manager@12.1.8
 
 # install and setup plugins required by sitespeed.io
 WORKDIR /usr/local/lib/node_modules/sitespeed.io/lib/plugins
@@ -168,7 +168,7 @@ RUN npm install && mv lib/* .
 WORKDIR /root
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 105.0.5195.52 --versions.gecko v0.32.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 109.0.5414.25 --versions.gecko v0.32.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -189,7 +189,7 @@ RUN echo  "node version:  $(node -v) \n" \
   "yarn version:          $(yarn -v) \n" \
   "Selenium version:      3.141.59 \n" \
   "Chrome version:        $(google-chrome --version || true) \n" \
-  "Chromedriver version:  105.0.5195.52 \n" \
+  "Chromedriver version:  109.0.5414.25 \n" \
   "Firefox version:       $(firefox --version || true) \n" \
   "Geckodriver version:   0.32.0 \n" \
   "git version:           $(git --version) \n" \
