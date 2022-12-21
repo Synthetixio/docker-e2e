@@ -1,5 +1,5 @@
 
-FROM ghcr.io/synthetixio/docker-node/debian:14.20
+FROM ghcr.io/synthetixio/docker-node/debian:14.21
 
 USER root
 
@@ -155,7 +155,7 @@ RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.co
     rm -f /usr/src/google-chrome-stable_current_amd64.deb
 
 # install Firefox browser
-RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/105.0.2/linux-x86_64/en-US/firefox-105.0.2.tar.bz2 \
+RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/108.0.1/linux-x86_64/en-US/firefox-108.0.1.tar.bz2 \
     && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
     && rm /tmp/firefox.tar.bz2 \
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
@@ -174,7 +174,7 @@ RUN npm install && mv lib/* .
 WORKDIR /root
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 105.0.5195.52 --versions.gecko v0.31.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 105.0.5195.52 --versions.gecko v0.32.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -197,7 +197,7 @@ RUN echo  "node version:  $(node -v) \n" \
   "Chrome version:        $(google-chrome --version || true) \n" \
   "Chromedriver version:  105.0.5195.52 \n" \
   "Firefox version:       $(firefox --version || true) \n" \
-  "Geckodriver version:   0.31.0 \n" \
+  "Geckodriver version:   0.32.0 \n" \
   "git version:           $(git --version) \n" \
   "user:                  $(whoami) \n" \
   "ubuntu version:        $(cat /etc/lsb-release)"
