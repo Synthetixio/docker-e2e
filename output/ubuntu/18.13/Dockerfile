@@ -1,5 +1,5 @@
 
-FROM ghcr.io/synthetixio/docker-node/debian:18.12
+FROM ghcr.io/synthetixio/docker-node/ubuntu:18.13
 
 USER root
 
@@ -24,14 +24,6 @@ ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
 
 ENV CI=1
-# fix issues with java install on debian
-RUN mkdir -p /usr/share/man/man1
-
-# install libappindicator3-1 - not included with Debian 11
-RUN wget --no-verbose /usr/src/libappindicator3-1_0.4.92-7_amd64.deb "http://ftp.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-7_amd64.deb" && \
-  dpkg -i /usr/src/libappindicator3-1_0.4.92-7_amd64.deb ; \
-  apt-get install -f -y && \
-  rm -f /usr/src/libappindicator3-1_0.4.92-7_amd64.deb
 
 # install dependencies
 RUN apt-get update && \
@@ -58,6 +50,7 @@ RUN apt-get update && \
     x11vnc \
     fluxbox \
     tzdata \
+    language-pack-en \
     # install Chinese fonts
     fonts-arphic-bkai00mp \
     fonts-arphic-bsmi00lp \
@@ -149,13 +142,13 @@ ENV DISPLAY_NUM 99
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 # install Chrome browser
-RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_96.0.4664.110-1_amd64.deb" && \
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_109.0.5414.119-1_amd64.deb" && \
     dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
     apt-get install -f -y && \
     rm -f /usr/src/google-chrome-stable_current_amd64.deb
 
 # install Firefox browser
-RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/108.0.1/linux-x86_64/en-US/firefox-108.0.1.tar.bz2 \
+RUN wget --no-verbose -O /tmp/firefox.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/109.0.1/linux-x86_64/en-US/firefox-109.0.1.tar.bz2 \
     && tar -C /opt -xjf /tmp/firefox.tar.bz2 \
     && rm /tmp/firefox.tar.bz2 \
     && ln -fs /opt/firefox/firefox /usr/bin/firefox
@@ -174,7 +167,7 @@ RUN npm install && mv lib/* .
 WORKDIR /root
 
 # install selenium drivers (ChromeDriver, GeckoDriver, etc)
-RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 109.0.5414.25 --versions.gecko v0.32.0
+RUN npx webdriver-manager update --ignore_ssl --versions.standalone 3.141.59 --versions.chrome 109.0.5414.74 --versions.gecko v0.32.0
 
 # give every user read access to the "/root" folder where the Cypress binary is cached
 # we really only need to worry about the top folder, fortunately
@@ -195,7 +188,7 @@ RUN echo  "node version:  $(node -v) \n" \
   "yarn version:          $(yarn -v) \n" \
   "Selenium version:      3.141.59 \n" \
   "Chrome version:        $(google-chrome --version || true) \n" \
-  "Chromedriver version:  109.0.5414.25 \n" \
+  "Chromedriver version:  109.0.5414.74 \n" \
   "Firefox version:       $(firefox --version || true) \n" \
   "Geckodriver version:   0.32.0 \n" \
   "git version:           $(git --version) \n" \
