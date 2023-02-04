@@ -87,6 +87,7 @@ RUN apt-get update && \
     libcurl3-nss \
     # Chrome dependencies
     libu2f-udev \
+    libvulkan1 \
     libgbm1 \
     fonts-liberation \
     xdg-utils \
